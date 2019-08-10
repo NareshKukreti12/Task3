@@ -1,14 +1,33 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-header class="search animated"  [ngClass]="slideUp()" no-border>
+    <h4>My Business is a</h4>
+    <ion-navbar  >
+        <ion-searchbar  
+         id="searchBar"
+        [(ngModel)]="searchTerm"
+        (ionChange)="setFilteredItems()"
+        [showCancelButton]='false'
+        placeholder="Enter business name here"
+        (ionFocus)="checkFocus($event)"
+        (ionCancel)="onCancel($event)"
+        (ionBlur)="FocusRemoved()">
+      </ion-searchbar>
+    </ion-navbar>
+  </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content padding>   
+    <ion-list *ngIf="isVisible">
+        <ion-item *ngFor="let item of items" (click)="SetBusiness(item)" >
+            <ion-avatar item-start>
+                <img [src]="item.logo">
+            </ion-avatar>
+          {{ item.title }}
+        </ion-item>
+    </ion-list>
+    <div class="divcontent" *ngIf="isFound==true">
+        <div id="logo" [ngClass]="lightSpeedIn()"  class="logo animated"><img  [src]="logo"> </div> 
+         <p class="animated large"  [ngClass]="Fade(1)" id="wonderful">Wonderful !!</p>
+        <p class="animated bntGoAhead" [ngClass]="Fade(2)" (click)="NextPage()" ><u>Go Ahead</u></p>
+    </div> 
+  
+  
 </ion-content>
