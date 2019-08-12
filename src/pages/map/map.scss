@@ -1,0 +1,31 @@
+page-map {
+  #map{
+      width: 100%;
+      height: 100%;
+      position: absolute !important;
+  }
+  .gmnoprint,.gm-control-active,.gm-fullscreen-control{
+    display: none !important;
+  }
+  .map{
+    position: fixed;
+    z-index: 2 !important;
+    background-color: rgba(0, 0, 1,0.5) !important;
+    width: 100%;
+    padding:20px !important;
+    display: none;
+   
+  }
+  .map input[type=text]{
+    border:1px solid #ccc;
+    height: 40px;
+    color: #fff;
+    padding-left: 5px;
+  }
+  #markerLayer img {
+    border: 2px solid red !important;
+    width: 85% !important;
+    height: 90% !important;
+    border-radius: 5px;
+  }
+}

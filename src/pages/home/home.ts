@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, Keyboard } from 'ionic-angular';
+import { Component} from '@angular/core';
+import { NavController, Keyboard, Platform } from 'ionic-angular';
 import { ServicesDataProvider } from '../../providers/services-data/services-data';
 import { FormControl } from '@angular/forms';
 import { Renderer } from '@angular/core';
@@ -16,14 +16,16 @@ export class HomePage {
     items: any;
     searching: any = false;
     isVisible:boolean=true;
-    logo;
+    logo;   
     isFound:boolean=false;
     result:string='';
     isFocus:boolean=false;
+   
   constructor(public navCtrl: NavController,
     public dataService:ServicesDataProvider,
     public renderer:Renderer,
     public keyboard:Keyboard,
+    public platform:Platform,
     private nativePageTransitions: NativePageTransitions
     ) {
     this.isVisible=false;
@@ -61,9 +63,35 @@ export class HomePage {
      this.isVisible=true;
      this.isFound=false;
   }
+  
+
   SetBusiness(item){
-    localStorage.setItem('business',JSON.stringify(item));
-   console.log(item.title);
+    let userDetails=[];
+    //localStorage.setItem('business',JSON.stringify(item));
+  
+    if(localStorage.getItem('business')==null){
+      userDetails.push({
+        business_details:item
+      });
+    localStorage.setItem('business',JSON.stringify(userDetails))
+    }
+    else{
+      let items=[]=JSON.parse(localStorage.getItem('business'));
+      let obj={
+        logo:item.logo,
+        title:item.title,
+        name:items[0]["business_details"]["name"]!=null?items[0]["business_details"]["name"]:null,
+        logos:{
+          thumbnail_url:items[0]["business_details"]["logos"]["thumbnail_url"]?items[0]["business_details"]["logos"]["thumbnail_url"]:null,
+          url:items[0]["business_details"]["logos"]["url"]?items[0]["business_details"]["logos"]["url"]:null
+        }
+      }
+      userDetails.push({
+        business_details:obj
+      })
+      console.log(userDetails);
+      localStorage.setItem('business',JSON.stringify(userDetails));
+    }
    this.keyboard.close();
     this.isVisible=false;   
     this.logo=item.logo;
@@ -125,17 +153,30 @@ export class HomePage {
     }
   }
   NextPage(){
-    let options: NativeTransitionOptions = {
-      direction: 'left',
-      duration: 500,
-      slowdownfactor: 3,
-      slidePixels: 20,
-      iosdelay: 100,
-      androiddelay: 150,
-      fixedPixelsTop: 0,
-      fixedPixelsBottom: 60
-     };
-     this.nativePageTransitions.slide(options);
-    this.navCtrl.push(Page2Page,{animate: true, direction: 'back'})
+    // let options: NativeTransitionOptions = {
+    //   direction: 'up',
+    //   duration: 500,
+    //   slowdownfactor: 3,
+    //   slidePixels: 20,
+    //   iosdelay: 100,
+    //   androiddelay: 150,
+    //   fixedPixelsTop: 0,
+    //   fixedPixelsBottom: 60
+    //  };
+  //   let options= 
+  //  {animate: true, 
+  //   animation: 'ios-transition', 
+  //       duration: 1000, 
+  //   direction: 'left'}
+   
+  //    this.nativePageTransitions.slide(options);
+  //   this.navCtrl.push(Page2Page,null,options)
+  let options= 
+   {animate: true, 
+    animation: 'ios-transition', 
+        duration: 1000, 
+    direction: 'left'}
+   this.navCtrl.push(Page2Page,null,options)
   }
+ 
 }

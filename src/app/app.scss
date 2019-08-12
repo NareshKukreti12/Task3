@@ -15,10 +15,16 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 @import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
-@import url('https://github.com/daneden/animate.css');
 *{
     font-family:Poppins 
 }
+
+
+.back-button{
+  padding: 0 !important;
+  margin:0 !important
+}
+
 .search{
     position: absolute;
     top: 45%;
@@ -27,7 +33,9 @@
    transform: translate(-50%, -50%);
    // -ms-transform: translate(-50%, -50%);
  }
- 
+ .toolbar-background{
+  background: transparent !important;
+}
 @-webkit-keyframes bounce {
   from,
   20%,

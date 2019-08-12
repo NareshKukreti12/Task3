@@ -21,15 +21,19 @@
    [showCancelButton]='false'
    (ionChange)="setFilteredItems()"
    placeholder="Enter name here"
-   (ionFocus)="checkFocus($event)"
+   (ionFocus)="checkFocus()"
    >
  </ion-searchbar>
 </div>
-<div class="divcontent" *ngIf="name.length>0">
-    <div id="logo"   class="logo animated"><img  [src]="logo"> </div> 
-     <p>Add logo</p>
-     <p class="animated large"   id="wonderful">{{businessName}}</p>
-     <p class="animated cool"  >Cool Hear !</p>
-    <p class="animated bntGoAhead"  (click)="NextPage()" ><u>Go Ahead</u></p>
+<div class="divcontent" *ngIf="isVisible">
+    <div id="logo"    class="logo animated">
+           
+        <img  [src]="logo" class="animated" imageViewer="original_url" [ngClass]="Animations(1)" > 
+    </div> 
+     <p (click)="addPic()" style="margin-top:10px!important">{{text}}</p>
+     <p class="animated large"   id="wonderful" [ngClass]="Animations(2)" >{{name}}</p>
+     <p class="animated cool"  *ngIf="name.length>0" >Cool Haan!</p>
+    <p class="animated bntGoAhead"  *ngIf="name.length>0" [ngClass]="Animations(3)" (click)="NextPage()" ><u>Go Ahead</u></p>
 </div> 
+<input type="file" (change)="fileUpload($event)" accept="image/*" style="display: none"  id="file-input" #fileInp>
 </ion-content>

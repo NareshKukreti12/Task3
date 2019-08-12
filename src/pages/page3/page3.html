@@ -1,0 +1,42 @@
+<!--
+  Generated template for the Page3Page page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-toolbar no-border>
+  <ion-navbar>
+    
+  </ion-navbar>
+</ion-toolbar>
+
+<ion-content padding >
+    <div class="search" *ngIf="!isOtpSent" [ngClass]="PhoneNumber(1)" id="div_phone_number" > 
+        <h4>Number I use</h4>
+       <ion-searchbar  
+       [(ngModel)]="phone_number"
+       type="number"
+      placeholder="Enter your mobile number here"
+     >
+   </ion-searchbar>
+     <div class="btn-submit animated" (click)="SendOTP()"  [ngClass]="Animations(1)" *ngIf="phone_number.length==10">
+       <button ion-button  color="primary" >Send OTP</button>
+     </div> 
+  </div>
+   <!--OTP-->
+  <div class="search" *ngIf="isOtpSent" [ngClass]="PhoneNumber(1)" id="div_phone_number" > 
+      <h4>A verification code has been sent to mobile number {{phone_number}}. Kindly verify your number </h4>
+     <ion-searchbar  
+     [(ngModel)]="otp"
+     type="password"
+    placeholder="Enter OTP here"
+   >
+ </ion-searchbar>
+   <div class="btn-submit animated" (click)="Verify()"  [ngClass]="Animations(1)" *ngIf="phone_number.length==10">
+    <button ion-button  color="primary" >Verify</button>
+     <div (click)="Resend()">Not received? Resend</div>
+     <div (click)="Cancel()">Cancel</div>
+  </div> 
+   
+  </div>
+</ion-content>

@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ServicesDataProvider  {
  
+  //userDetails=[];
   items=[];
   constructor() {
     this.items = [
@@ -27,7 +28,7 @@ export class ServicesDataProvider  {
       { title:"Fitness",logo:"https://cdn0.iconfinder.com/data/icons/basic-8/97/45-512.png"},
     ];
   }
-
+  
   filterItems(searchTerm) {
     return this.items.filter(item => {
       return item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;

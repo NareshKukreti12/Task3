@@ -21,6 +21,9 @@ page-home {
         
        // margin-top: 20px !important;
     }
+    .item-md ion-avatar img{
+      object-fit: cover !important;
+    }
     .logo{
         width: 100%;
         display: flex;

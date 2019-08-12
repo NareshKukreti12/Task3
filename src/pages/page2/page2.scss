@@ -1,6 +1,6 @@
 page-page2 {
     .divcontent{
-        margin-top: 167px;
+        margin-top: 145px;
     }
     .searchbar-md .searchbar-search-icon{
         display: none !important;
@@ -35,7 +35,7 @@ page-page2 {
         margin-top: 30px;
     }
     .logo img{
-         width: 120px !important;
+        width: 120px !important;
         height: 120px  !important;
         object-fit: cover;
         border-radius: 50%;
@@ -54,7 +54,7 @@ page-page2 {
         margin-top: 17% !important;
       }
       .cool{
-          margin-top: 19%;
+          margin-top: 12% !important;
           font-weight: normal;
       }
       .bntGoAhead{
@@ -62,4 +62,34 @@ page-page2 {
         bottom: 2%;
         left: -7px;
       } 
+      .toolbar{
+          background: transparent !important;
+      }
+
+      .fadein{
+        -moz-animation: fadein 1s; /* Firefox */
+        -webkit-animation: fadein 1s; /* Safari and Chrome */
+         -o-animation: fadein 1s; /* Opera */
+         transition: .3s ease-in-out;         
+      }
+      @-webkit-keyframes fadein { /* Safari and Chrome */
+        from {
+            opacity:0;
+        }
+        to {
+            opacity:1;
+        }
+    }
+    @-o-keyframes fadein { /* Opera */
+        from {
+            opacity:0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .toolbar-background{
+        background: transparent !important;
+    }
 }
