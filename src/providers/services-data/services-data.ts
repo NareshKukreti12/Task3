@@ -1,6 +1,7 @@
 
 import { Injectable } from '@angular/core';
-
+import {Http, RequestOptions, Headers } from '@angular/http';
+import 'rxjs/Rx';
 /*
   Generated class for the ServicesDataProvider provider.
 
@@ -12,7 +13,9 @@ export class ServicesDataProvider  {
  
   //userDetails=[];
   items=[];
-  constructor() {
+  http:any;
+  constructor(http:Http,) {
+     this.http=http;
     this.items = [
       { title: "Software Development",logo:'http://www.sclance.com/pngs/technology-icon-png/technology_icon_png_1359192.png' },
       { title: "Marketing",logo:'https://astrolabs.com/wp-content/uploads/2017/09/Icons-DM-SMM.png' },
@@ -22,9 +25,7 @@ export class ServicesDataProvider  {
       { title: "Aviation",logo:'https://www.designfreelogoonline.com/wp-content/uploads/2016/01/000679-Free-logo-maker-Aircraft-Logo-Templates-02.png' },
       { title: "Restaurant",logo:'https://www.freeiconspng.com/uploads/restaurant-icon-png-7.png' },
       { title: "Clothing",logo:'https://www.pinclipart.com/picdir/middle/168-1681636_140-clothes-icon-packs-icon-t-shirt-png.png' },
-      { title:"Fitness",logo:"https://cdn0.iconfinder.com/data/icons/basic-8/97/45-512.png"},
       { title: "Restaurant",logo:'https://www.freeiconspng.com/uploads/restaurant-icon-png-7.png' },
-      { title: "Clothing",logo:'https://www.pinclipart.com/picdir/middle/168-1681636_140-clothes-icon-packs-icon-t-shirt-png.png' },
       { title:"Fitness",logo:"https://cdn0.iconfinder.com/data/icons/basic-8/97/45-512.png"},
     ];
   }
@@ -33,5 +34,9 @@ export class ServicesDataProvider  {
     return this.items.filter(item => {
       return item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
     });
+}
+  getPlusCode(lat,lng){
+     let url="https://plus.codes/api?address="+lat+","+lng;
+     return this.http.get(url).map(res=>res.json())
   }
 }

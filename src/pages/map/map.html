@@ -12,9 +12,35 @@
 
 <ion-content>
   <div class="map">
-      <ion-input placeholder="Country"></ion-input>
-      <ion-input placeholder="City"></ion-input>
-      <ion-input placeholder="State"></ion-input>
+    <div style="width:100%">
+        <ion-input style="width:40%" [(ngModel)]="city" placeholder="City"></ion-input>
+        <ion-input style="width:40%" [(ngModel)]="state" placeholder="State"></ion-input>
+    </div>
+      <ion-input  [(ngModel)]="country" placeholder="Country"></ion-input>
+      
+      <ion-input (ionChange)="UpdateAddress()" [(ngModel)]="address" placeholder="Address"></ion-input>
+      <p  style="width:100%;text-align: center">We got you   <ion-icon color="primary" name="happy"></ion-icon></p>
+      <ion-item>
+        <ion-label>Do not have an address</ion-label>
+        <ion-checkbox color="dark" checked="false"></ion-checkbox>
+      </ion-item>
+      <p style="width:100%;text-align: center"><u>Go Ahead</u></p>
   </div>
     <div #map id="map"></div> 
+    <div class="info-window">
+     <!-- Address: {{address}} 
+     Latitude: {{lat}}
+    Longitude:{{lng}}
+    Plus Code{{}} -->
+ 
+    <ion-list>
+      <ion-item>
+      <!-- <h2>Address:{{address}}</h2>  -->
+      <h2>Plus Code:{{plusCode}}</h2>
+      <!-- <h2>Latitude:{{lat}}</h2>     
+      <h2>Latitude:{{lng}}</h2>    -->
+      </ion-item>
+     
+    </ion-list>
+    </div>
 </ion-content>

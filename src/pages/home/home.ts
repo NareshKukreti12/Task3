@@ -70,12 +70,24 @@ export class HomePage {
     //localStorage.setItem('business',JSON.stringify(item));
   
     if(localStorage.getItem('business')==null){
+      let businessDetails=[];
+      businessDetails.push({
+        logo:item.logo,
+        title:item.title,
+        name:null,
+        logos:{
+          thumbnail_url:null,
+          url:null
+        }
+      })
       userDetails.push({
-        business_details:item
+        business_details:businessDetails,
+        
       });
     localStorage.setItem('business',JSON.stringify(userDetails))
     }
     else{
+      
       let items=[]=JSON.parse(localStorage.getItem('business'));
       let obj={
         logo:item.logo,

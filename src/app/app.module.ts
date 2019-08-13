@@ -13,6 +13,10 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { Page3Page } from '../pages/page3/page3';
 import { Page4Page } from '../pages/page4/page4';
 import { MapPage } from '../pages/map/map';
+import { Geolocation } from '@ionic-native/geolocation';
+import { NativeGeocoder } from '@ionic-native/native-geocoder';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from "@angular/common/http";
 @NgModule({
   declarations: [
     MyApp,
@@ -26,7 +30,9 @@ import { MapPage } from '../pages/map/map';
     BrowserModule,
     AutoCompleteModule,
     IonicModule.forRoot(MyApp),
-    IonicImageViewerModule
+    IonicImageViewerModule,
+    HttpModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -43,7 +49,9 @@ import { MapPage } from '../pages/map/map';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ServicesDataProvider,
     ServicesDataProvider,
-    NativePageTransitions
+    NativePageTransitions,
+    Geolocation,
+    NativeGeocoder
   ]
 })
 export class AppModule {}

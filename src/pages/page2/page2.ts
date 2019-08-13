@@ -48,8 +48,8 @@ export class Page2Page {
         this.name=items[0]["business_details"].name;
         this.checkFocus();
      }
-     console.log(items[0]["business_details"]["logos"]["thumbnail_url"]);
-     if(items[0]["business_details"]["logos"].thumbnail_url!=null){
+   //  console.log(items[0]["business_details"]["logos"]["thumbnail_url"]);
+     if(items[0]["business_details"]["logos"]){
        this.original_url=this.logo=items[0]["business_details"]["logos"]["thumbnail_url"];
       
        this.isLogo=true;
@@ -116,7 +116,7 @@ export class Page2Page {
       let items=[]=JSON.parse(localStorage.getItem('business'));
       let logo={
         thumbnail_url: (this.isLogo)?this.logo:null,
-        url:(this.isLogo)? this.original_url:null
+       // url:(this.isLogo)? this.original_url:null
       }
      
       let obj={
