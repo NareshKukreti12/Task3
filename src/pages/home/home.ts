@@ -94,8 +94,8 @@ export class HomePage {
         title:item.title,
         name:items[0]["business_details"]["name"]!=null?items[0]["business_details"]["name"]:null,
         logos:{
-          thumbnail_url:items[0]["business_details"]["logos"]["thumbnail_url"]?items[0]["business_details"]["logos"]["thumbnail_url"]:null,
-          url:items[0]["business_details"]["logos"]["url"]?items[0]["business_details"]["logos"]["url"]:null
+          thumbnail_url:items[0]["business_details"]["logos"]["thumbnail_url"]!=null?items[0]["business_details"]["logos"]["thumbnail_url"]:null,
+          url:items[0]["business_details"]["logos"]["url"]!=null?items[0]["business_details"]["logos"]["url"]:null
         }
       }
       userDetails.push({

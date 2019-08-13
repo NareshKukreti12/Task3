@@ -12,14 +12,15 @@
 
 <ion-content>
   <div class="map">
-    <div style="width:100%">
-        <ion-input style="width:40%" [(ngModel)]="city" placeholder="City"></ion-input>
-        <ion-input style="width:40%" [(ngModel)]="state" placeholder="State"></ion-input>
-    </div>
-      <ion-input  [(ngModel)]="country" placeholder="Country"></ion-input>
-      
+    <div style="width:100%;text-align: center">
+        <div style="width: 50%;float: left;"><ion-input style="width:100%" [(ngModel)]="city" placeholder="City"></ion-input></div>
+        <div style="width: 50%;float: left;"> <ion-input style="width:100%"  [(ngModel)]="state" placeholder="State"></ion-input></div>
+    </div>   
+      <ion-input  [(ngModel)]="country" disabled placeholder="Country"></ion-input>      
       <ion-input (ionChange)="UpdateAddress()" [(ngModel)]="address" placeholder="Address"></ion-input>
+      <p style="width:100%;text-align: center"><u>Locate on Map</u></p>
       <p  style="width:100%;text-align: center">We got you   <ion-icon color="primary" name="happy"></ion-icon></p>
+      
       <ion-item>
         <ion-label>Do not have an address</ion-label>
         <ion-checkbox color="dark" checked="false"></ion-checkbox>
