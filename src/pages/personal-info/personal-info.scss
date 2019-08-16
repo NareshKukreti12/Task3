@@ -1,0 +1,26 @@
+page-personal-info {
+  .center{
+      text-align: center;
+  }
+  input[type=text]{
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding:10px;
+  }
+  .item-md .radio-md[item-left]{
+      margin-right:5px !important;
+      color: #565656 !important
+  }
+  .radio-md .radio-checked{
+      border-color: #565656 !important;
+  }
+  .radio-md .radio-inner{
+      background-color: #565656 !important
+  }
+  ion-avatar img{
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    border:1px solid #ccc;
+  }
+}

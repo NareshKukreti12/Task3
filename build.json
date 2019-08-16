@@ -1,0 +1,11 @@
+{
+ "android": {
+   "debug": {
+     "keystore": "free2bill.keystore",
+     "storePassword": "123456",
+     "alias": "free2bill",
+     "password" : "123456",
+     "keystoreType": ""
+   }
+ }
+}

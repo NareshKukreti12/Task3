@@ -1,0 +1,30 @@
+<!--
+  Generated template for the PersonalInfoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!-- <ion-header>
+  <ion-navbar>
+    <ion-title>personalInfo</ion-title>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-content padding>
+     <div class="search center">
+        <p style="font-weight: bold;font-size: 1.9rem">I am </p>
+        <ion-input [(ngModel)]="name"  placeholder="Your name"></ion-input>    
+        <ion-input [(ngModel)]="position"  placeholder="Position/Designation"></ion-input>    
+        <p  style="font-weight: bold">at</p>
+        <ion-item>
+           
+          <ion-avatar item-start>
+            <img [src]="logo">
+          </ion-avatar>
+            <ion-label style="color:#565656!important">{{value}}</ion-label>
+          
+          </ion-item>
+          <p>{{address}}</p>
+     </div>
+     <p *ngIf="name.length>0 && position.length>0" [ngClass]="Slide()" (click)="NextPage()"  class="animated footer"><u>Go Ahead</u></p>
+</ion-content>

@@ -45,6 +45,11 @@ export class Page3Page {
   }
   SendOTP(){
     this.isOtpSent=true;
+    setTimeout(()=>{
+      console.log("Here");
+      (document.getElementById('txtOtp') as HTMLInputElement).focus();
+    },2000);
+    
   }
   Cancel(){
      this.isOtpSent=false;
@@ -66,7 +71,8 @@ export class Page3Page {
              animation: 'ios-transition', 
                  duration: 1000, 
              direction: 'left'};
-             this.navCtrl.push(Page4Page,null,options)
+             this.navCtrl.push(Page4Page,null,options);
+            localStorage.setItem('phone_number',this.phone_number);
           }
         }
       }]
@@ -96,6 +102,7 @@ export class Page3Page {
     confirm.present();
   }
   Verify(){
+  
     if(this.otp=="123456"){
       this.ShowAlert("Message","Your mobile number has been verified successfully!",2)
     }

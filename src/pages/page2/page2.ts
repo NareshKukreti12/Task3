@@ -49,7 +49,7 @@ export class Page2Page {
         this.checkFocus();
      }
    //  console.log(items[0]["business_details"]["logos"]["thumbnail_url"]);
-     if(items[0]["business_details"]["logos"]){
+     if(items[0]["business_details"]["logos"].thumbnail_url!=null){
        this.original_url=this.logo=items[0]["business_details"]["logos"]["thumbnail_url"];
       
        this.isLogo=true;

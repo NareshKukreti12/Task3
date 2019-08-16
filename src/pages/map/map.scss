@@ -26,10 +26,13 @@ page-map {
     height: 40px;
     color: #565665 !important;
     padding-left: 5px;
-   margin-top: 0px !important;
+   margin-top: 2px !important;
     margin-bottom: 0px !important;
     font-weight: normal !important;
   }
+  .text-input[disabled] {
+    opacity: 0.8 !important;
+}
   #markerLayer img {
     border: 2px solid color($colors,primary) !important;
     width: 85% !important;
@@ -37,6 +40,9 @@ page-map {
     border-radius: 50%;
     object-fit: cover !important;
   }
+
+
+  
   .info-window{
     position: absolute;
     z-index: 2;
@@ -50,5 +56,8 @@ page-map {
   .item{
     background: transparent !important;
     font-size: unset !important;
+  }
+  .item.item-md .checkbox-md{
+    margin-right: 5px!important;
   }
 }

@@ -71,7 +71,7 @@ export class HomePage {
   
     if(localStorage.getItem('business')==null){
       let businessDetails=[];
-      businessDetails.push({
+      let obj={
         logo:item.logo,
         title:item.title,
         name:null,
@@ -79,9 +79,10 @@ export class HomePage {
           thumbnail_url:null,
           url:null
         }
-      })
+      }
+     
       userDetails.push({
-        business_details:businessDetails,
+        business_details:obj,
         
       });
     localStorage.setItem('business',JSON.stringify(userDetails))
@@ -89,20 +90,22 @@ export class HomePage {
     else{
       
       let items=[]=JSON.parse(localStorage.getItem('business'));
+    //  console.log(items[0]["business_details"])
+    
       let obj={
         logo:item.logo,
         title:item.title,
         name:items[0]["business_details"]["name"]!=null?items[0]["business_details"]["name"]:null,
         logos:{
-          thumbnail_url:items[0]["business_details"]["logos"]["thumbnail_url"]?items[0]["business_details"]["logos"]["thumbnail_url"]:null,
-          url:items[0]["business_details"]["logos"]["url"]?items[0]["business_details"]["logos"]["url"]:null
+          thumbnail_url:items[0]["business_details"]["logos"].thumbnail_url!=null?items[0]["business_details"]["logos"]["thumbnail_url"]:null
+         // url:items[0]["business_details"][0]["logos"].url?items[0]["business_details"]["logos"].url:null
         }
       }
       userDetails.push({
         business_details:obj
       })
-      console.log(userDetails);
-      localStorage.setItem('business',JSON.stringify(userDetails));
+        console.log(userDetails);
+       localStorage.setItem('business',JSON.stringify(userDetails));
     }
    this.keyboard.close();
     this.isVisible=false;   
@@ -188,7 +191,7 @@ export class HomePage {
     animation: 'ios-transition', 
         duration: 1000, 
     direction: 'left'}
-   this.navCtrl.push(Page2Page,null,options)
+   this.navCtrl.setRoot(Page2Page,null,options)
   }
  
 }

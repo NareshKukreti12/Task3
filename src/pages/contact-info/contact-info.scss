@@ -1,0 +1,27 @@
+page-contact-info {
+    .center{
+        text-align: center;
+    }
+    input[type=text],input[type=email]{
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding:10px;
+    }
+    .social{
+        margin-top: 40px;
+    }
+    .social button{
+        padding: 10px;
+        border-radius: 5px;
+        min-width: 100%;
+        color: color($colors,light);
+        margin-top: 10px;
+    }
+    .btn-google{
+        background-color: color($colors,primary);
+
+    }
+    .btn-facebook{
+        background-color:#3b5998
+    }
+}

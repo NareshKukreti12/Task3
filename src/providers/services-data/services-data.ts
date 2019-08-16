@@ -23,7 +23,6 @@ export class ServicesDataProvider  {
       { title: "Automobiles",logo:'https://www.pngfind.com/pngs/m/145-1450403_automobiles-reliable-first-adcon-private-limited-hd-png.png' },
       { title: "Transport",logo:'https://img.pngio.com/filewv-transport-logopng-transport-png-1187_1187.png' },
       { title: "Aviation",logo:'https://www.designfreelogoonline.com/wp-content/uploads/2016/01/000679-Free-logo-maker-Aircraft-Logo-Templates-02.png' },
-      { title: "Restaurant",logo:'https://www.freeiconspng.com/uploads/restaurant-icon-png-7.png' },
       { title: "Clothing",logo:'https://www.pinclipart.com/picdir/middle/168-1681636_140-clothes-icon-packs-icon-t-shirt-png.png' },
       { title: "Restaurant",logo:'https://www.freeiconspng.com/uploads/restaurant-icon-png-7.png' },
       { title:"Fitness",logo:"https://cdn0.iconfinder.com/data/icons/basic-8/97/45-512.png"},

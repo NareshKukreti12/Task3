@@ -1,0 +1,24 @@
+page-add-new-location {
+    .large{
+        font-size: 2.5rem;
+        font-weight: normal !important;
+        margin-top: 33% !important;
+      }
+      p{
+        width: 100%;
+        text-align: center;
+        margin-top: 60px !important;
+        font-weight: bold;
+    }
+    .footer{
+        position:absolute;
+        bottom: 2%;
+        text-align: center;
+        left: -2%;
+    }
+    .location_count{
+        width: 100%;
+        text-align:center;
+        margin-top: 100px;
+    }
+}

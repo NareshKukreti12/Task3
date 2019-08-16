@@ -1,6 +1,5 @@
 <!--
   Generated template for the MapPage page.
-
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
@@ -11,20 +10,33 @@
 </ion-header> -->
 
 <ion-content>
-  <div class="map">
-    <div style="width:100%">
-        <ion-input style="width:40%" [(ngModel)]="city" placeholder="City"></ion-input>
-        <ion-input style="width:40%" [(ngModel)]="state" placeholder="State"></ion-input>
-    </div>
-      <ion-input  [(ngModel)]="country" placeholder="Country"></ion-input>
-      
+  <div class="map" >
+    <div *ngIf="checked==false">
+    <div style="width:100%;text-align: center">
+        <div style="width: 33%;float: left"><ion-input style="width:100%;z-index: 6;" [(ngModel)]="city" placeholder="City"></ion-input></div>
+        <div style="width: 33%;float: left"> <ion-input style="width:100%;z-index: 6;"  [(ngModel)]="state" placeholder="State"></ion-input></div>
+        <ion-input  style="width: 33%;float: left" [(ngModel)]="country" disabled placeholder="Country"></ion-input>    
+      </div>          
       <ion-input (ionChange)="UpdateAddress()" [(ngModel)]="address" placeholder="Address"></ion-input>
-      <p  style="width:100%;text-align: center">We got you   <ion-icon color="primary" name="happy"></ion-icon></p>
-      <ion-item>
-        <ion-label>Do not have an address</ion-label>
-        <ion-checkbox color="dark" checked="false"></ion-checkbox>
-      </ion-item>
-      <p style="width:100%;text-align: center"><u>Go Ahead</u></p>
+    </div> 
+      <ion-item *ngIf="isAddress==true">
+          <ion-label >Do not have an address</ion-label>
+          <ion-checkbox color="dark" (ionChange)="datachanged($event)" checked="false"></ion-checkbox>
+        </ion-item>
+        <div  id="div_address" style="padding-bottom: 5px;padding-left: 15px;padding-right: 15px">
+            <p style="margin-left:10px">City you operate in</p> 
+            <input id="from"  [(ngModel)]="address2" style="width:100% !important" type="text" placeholder="From">
+           </div>  
+      <p style="width:100%;text-align: center"  (click)="LocateOnMap()" *ngIf="address.length>0" >
+        <u *ngIf="checked==false">Locate on Map</u>&nbsp;&nbsp;
+        <u (click)="NextPage(1)">Go Ahead</u> &nbsp;&nbsp;
+        <u *ngIf="prt==1" (click)="NextPage(0)">Skip</u>
+      </p>
+    
+      <!-- <p  style="display:none !important"  *ngIf="lat!=null" style="width:100%;text-align: center">We got you   <ion-icon color="primary" name="happy"></ion-icon></p> -->
+      
+    
+     
   </div>
     <div #map id="map"></div> 
     <div class="info-window">

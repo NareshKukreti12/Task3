@@ -36,6 +36,15 @@
  .toolbar-background{
   background: transparent !important;
 }
+
+.footer{
+  width: 100%;
+  position:absolute;
+  bottom: 2%;
+  text-align: center;
+  left: -2%;
+}
+
 @-webkit-keyframes bounce {
   from,
   20%,

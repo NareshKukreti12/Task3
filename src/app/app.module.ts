@@ -17,6 +17,13 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from "@angular/common/http";
+import { AddNewLocationPage } from '../pages/add-new-location/add-new-location';
+import { PersonalInfoPage } from '../pages/personal-info/personal-info';
+import { ContactInfoPage } from '../pages/contact-info/contact-info';
+import { PasswordPage } from '../pages/password/password';
+import { ThankyouPage } from '../pages/thankyou/thankyou';
+import { GooglePlus } from '@ionic-native/google-plus';
+import { Facebook } from '@ionic-native/facebook';
 @NgModule({
   declarations: [
     MyApp,
@@ -24,7 +31,12 @@ import { HttpClientModule } from "@angular/common/http";
     Page2Page,
     Page3Page,
     Page4Page,
-    MapPage
+    MapPage,
+    AddNewLocationPage,
+    PersonalInfoPage,
+    ContactInfoPage,
+    PasswordPage,
+    ThankyouPage
   ],
   imports: [
     BrowserModule,
@@ -41,7 +53,12 @@ import { HttpClientModule } from "@angular/common/http";
     Page2Page,
     Page3Page,
     Page4Page,
-    MapPage
+    MapPage,
+    AddNewLocationPage,
+    PersonalInfoPage,
+    ContactInfoPage,
+    PasswordPage,
+    ThankyouPage
   ],
   providers: [
     StatusBar,
@@ -51,7 +68,10 @@ import { HttpClientModule } from "@angular/common/http";
     ServicesDataProvider,
     NativePageTransitions,
     Geolocation,
-    NativeGeocoder
+    NativeGeocoder,
+    GooglePlus,
+    Facebook
+    
   ]
 })
 export class AppModule {}

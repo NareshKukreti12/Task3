@@ -27,6 +27,7 @@
   <div class="search" *ngIf="isOtpSent" [ngClass]="PhoneNumber(1)" id="div_phone_number" > 
       <h4>A verification code has been sent to mobile number {{phone_number}}. Kindly verify your number </h4>
      <ion-searchbar  
+     id="txtOtp"
      [(ngModel)]="otp"
      type="password"
     placeholder="Enter OTP here"
