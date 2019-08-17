@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { Component,ViewChild,ElementRef } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController, Searchbar } from 'ionic-angular';
 import { Page4Page } from '../page4/page4';
 
 /**
@@ -18,6 +18,7 @@ export class Page3Page {
   phone_number:any='';
   isOtpSent:boolean=false;
   otp:string=''
+  @ViewChild('SearchBar') searchbar: Searchbar;
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public alertCtrl:AlertController
@@ -45,9 +46,12 @@ export class Page3Page {
   }
   SendOTP(){
     this.isOtpSent=true;
+    
     setTimeout(()=>{
+      this.searchbar.setFocus();
       console.log("Here");
       (document.getElementById('txtOtp') as HTMLInputElement).focus();
+       
     },2000);
     
   }
@@ -107,7 +111,7 @@ export class Page3Page {
       this.ShowAlert("Message","Your mobile number has been verified successfully!",2)
     }
     else{
-      this.ShowAlert("Message","Invalid verification code!",2)
+      this.ShowAlert("Message","Invalid verification code!",1)
     }
   }
 }

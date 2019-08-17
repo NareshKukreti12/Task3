@@ -50,7 +50,7 @@ export class PersonalInfoPage {
     this.checked=true;
   }
  Slide(){
-   if(this.name.length>0 && this.position.length>0 ){
+   if(this.name.length>0 ){
      return {'fadeInDown':true}
    }
  }

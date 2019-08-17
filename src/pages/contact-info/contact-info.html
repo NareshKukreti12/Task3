@@ -14,7 +14,12 @@
     <ion-content padding>
         <div class="search center">
            <p style="font-weight: bold;font-size: 1.9rem">Mail me @</p>
-           <ion-input  [(ngModel)]= "email"  placeholder="Your email address"></ion-input>    
+           <ion-input  [(ngModel)]= "email"  
+           placeholder="Your email address"
+           (ionBlur)="FocusRemoved()"
+           (ionFocus)="checkFocus($event)"
+           [ngClass]="isEmailIsValid()"
+           ></ion-input>    
             
            <p  style="font-weight: bold">Or</p>
         

@@ -28,15 +28,18 @@ export class MapPage {
   address_components=[];
   address2;
   isAddress:boolean=false;
+  business_name:string ='';
+  country_code='';
+  latCurrent;lngCurrent;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private geolocation: Geolocation,public platform:Platform,
     public serviceRep:ServicesDataProvider,
     public alertCtrl:AlertController,
     public ngZone:NgZone
     ) {
-      console.log(localStorage.getItem('locations'))
+    
       if(localStorage.getItem('locations')!=null){
-        console.log("Heyyy")
+      
         this.isAddress=false;
       }
       else{
@@ -46,11 +49,14 @@ export class MapPage {
       console.log("Parent",this.prt)
       this.geolocation.getCurrentPosition().then((resp) => {
         this.lat= resp.coords.latitude
-        this.lng=resp.coords.longitude
+        this.lng=resp.coords.longitude;
+       
         let items=[]=JSON.parse(localStorage.getItem('business'));
         var address =this.name=items[0]["business_details"]["name"];
+        console.log(address);
+        this.business_name=address;
         this.GetCurrentLocation(this.lat,this.lng,0);
-        this.GetLocation(address);
+       
        
        }).catch((error) => {
          console.log('Error getting location', error);
@@ -62,16 +68,18 @@ export class MapPage {
  
 
   GetLocation(address){
+    console.log(this.country_code);
     var geocoder = new google.maps.Geocoder();
     let items=[]=JSON.parse(localStorage.getItem('business'));
    // var address =this.name=items[0]["business_details"]["name"];
-    geocoder.geocode( { 'address': address}, (results, status)=> {
+    geocoder.geocode( { 'address': address,'componentRestrictions':{'country':this.country_code.toLowerCase().toString()}}, (results, status)=> {
       console.log(results);
 
       if (status == google.maps.GeocoderStatus.OK) {
           this.address=results[0]["formatted_address"];
           var latitude = results[0].geometry.location.lat();
           var longitude = results[0].geometry.location.lng();
+          let country;
            this.ngZone.run(()=>{
            
           this.lat=latitude;
@@ -79,17 +87,20 @@ export class MapPage {
             var AddressComponent=[]=results[0].address_components;
             this.address_components=AddressComponent;
             console.log(AddressComponent);
+           
             this.loadMap();
+            console.log(AddressComponent);
             AddressComponent.forEach(element => {
                
                 if(element.types.indexOf('administrative_area_level_1')>=0){
                   //this.shipForm.controls['state'].setValue(element.long_name);
                    this.state=element.long_name
                 }
-                // if(element.types.indexOf('country')>=0){
-                //   //this.shipForm.controls['country'].setValue(element.long_name);
-                //   this.country=element.long_name;
-                // }
+                if(element.types.indexOf('country')>=0){
+                  //this.shipForm.controls['country'].setValue(element.long_name);
+                  country=element.long_name;
+
+                }
                 if(element.types.indexOf('administrative_area_level_2')>=0){
                   //this.shipForm.controls['state'].setValue(element.long_name);
                    this.city=element.long_name
@@ -98,7 +109,16 @@ export class MapPage {
             });
            // this.city=results[0].address_components[0]["short_name"];
            })
-         
+           console.log(this.country!=country);
+           if(this.country!=country){
+           
+            // this.GetCurrentLocation(this.latCurrent,this.lngCurrent,0);
+            // this.GetCurrentLocation(ltTemp,lngTmp,1)
+           }
+           else{
+           // this.loadMap();
+           }
+          console.log(this.country==country);
           this.GetPlusCode();
         
           } 
@@ -113,6 +133,8 @@ export class MapPage {
 
 
   GetCurrentLocation(lat,lng,location){
+    this.latCurrent=lat,
+    this.lngCurrent=lng;
     var geocoder = new google.maps.Geocoder();
     let items=[]=JSON.parse(localStorage.getItem('business'));
    // var address =this.name=items[0]["business_details"]["name"];
@@ -135,23 +157,27 @@ export class MapPage {
                    this.state=element.long_name
                 }
                
-                if(element.types.indexOf('administrative_area_level_2')>=0){
+                if(element.types.indexOf('locality')>=0){
                   //this.shipForm.controls['state'].setValue(element.long_name);
                    this.city=element.long_name
                 }
                 if(element.types.indexOf('country')>=0 && location==0){
                   //this.shipForm.controls['country'].setValue(element.long_name);
                   this.country=element.long_name;
+                  this.country_code=element.short_name;
                 }
             });
            // this.city=results[0].address_components[0]["short_name"];
            })
          
           this.GetPlusCode();
-        
+          this.business_name=this.business_name+" "+this.state+" "+this.country;
+          this.GetLocation(this.business_name);
+          this.AutoComplete();
           } 
          
       }); 
+     
   }
 
   plusCode;
@@ -178,20 +204,32 @@ export class MapPage {
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       this.getLocation();
+     
     //  this.addMarker();
 // this.getItems();
    
 }
   ionViewDidLoad() {
     (document.getElementById('div_address') as HTMLDivElement).style.display='none';
+
+    let items=[]=JSON.parse(localStorage.getItem('business'));
+    if(items[0]["business_details"]["logos"]["thumbnail_url"]!=null){
+       this.image=items[0]["business_details"]["logos"]["thumbnail_url"]
+    }
+    else{
+      this.image=null;
+    }
+   
+  }
+  AutoComplete(){
+    console.log("Hiii", this.country);
     var options = {
       types: ['(cities)'],
-    
+      componentRestrictions: {country: this.country_code}
      };
-     var input = document.getElementById('from');
-     var autocomplete = new google.maps.places.Autocomplete(input,options);
-
-      
+   
+    var input = document.getElementById('from');
+    var autocomplete = new google.maps.places.Autocomplete(input,options);
     google.maps.event.addListener(autocomplete, 'place_changed',  ()=> {
       var place=[] = autocomplete.getPlace().address_components;
       let city='',state='',country='';
@@ -210,15 +248,6 @@ export class MapPage {
       this.address2=city+", "+state+", "+country;
       console.log(place);
       });
-
-    let items=[]=JSON.parse(localStorage.getItem('business'));
-    if(items[0]["business_details"]["logos"]["thumbnail_url"]!=null){
-       this.image=items[0]["business_details"]["logos"]["thumbnail_url"]
-    }
-    else{
-      this.image=null;
-    }
-   
   }
   getLocation() {
     if(this.platform.is('cordova')){
@@ -249,7 +278,7 @@ export class MapPage {
   }
   addMarker(lat,lng){
     var icon = {
-      url: this.image, // url
+      url: this.image!=null?this.image:"http://www.myiconfinder.com/uploads/iconsets/256-256-6096188ce806c80cf30dca727fe7c237.png", // url
       scaledSize: new google.maps.Size(50, 50), // scaled size
       origin: new google.maps.Point(0,0), // origin
       anchor: new google.maps.Point(0, 0), // anchor
@@ -258,7 +287,7 @@ export class MapPage {
  
  let marker=  new google.maps.Marker({
       map: this.map,
-    //  icon:this.image!=null?icon:null,
+     icon:icon,
       shape: [0, 0, 40, 40],
       position: this.map.getCenter(),
       animation: google.maps.Animation.DROP,
@@ -278,9 +307,10 @@ export class MapPage {
      this.ngZone.run(()=>{
       this.lat=e.latLng.lat();
       this.lng=e.latLng.lng();
-      this.GetCurrentLocation(this.lat,this.lng,1);
-      this.GetPlusCode();
-      console.log(this.lat,this.lng);
+      console.log(e);
+     // this.GetCurrentLocation(this.lat,this.lng,1);
+      //this.GetPlusCode();
+      this.GetAddress(this.lat,this.lng);
      })
      
     });
@@ -289,13 +319,49 @@ export class MapPage {
    });
   }
 
+ GetAddress(lat,lng){
+  var geocoder = new google.maps.Geocoder();
+  let latLng = new google.maps.LatLng(lat,lng);
+  geocoder.geocode( { 'latLng': latLng}, (results, status)=> {
+    if (status == google.maps.GeocoderStatus.OK) {
+        this.address=results[0]["formatted_address"];
+        var latitude = results[0].geometry.location.lat();
+        var longitude = results[0].geometry.location.lng();
+         this.ngZone.run(()=>{
+         
+        this.lat=latitude;
+          this.lng=longitude;
+          var AddressComponent=[]=results[0].address_components;
+          this.address_components=AddressComponent;
+          AddressComponent.forEach(element => {
+             
+              if(element.types.indexOf('administrative_area_level_1')>=0){
+                //this.shipForm.controls['state'].setValue(element.long_name);
+                 this.state=element.long_name
+              }
+             
+              if(element.types.indexOf('locality')>=0){
+                //this.shipForm.controls['state'].setValue(element.long_name);
+                 this.city=element.long_name
+              }
+              
+          });
+         // this.city=results[0].address_components[0]["short_name"];
+         })
+       
+        this.GetPlusCode();     
+        } 
+       
+    }); 
+ }
+
   addInfoWindow(marker, content){
        
     let infoWindow = new google.maps.InfoWindow({
       content: content
     });
    
-    
+   
    
   }
 
@@ -405,6 +471,15 @@ ShowAlert(title,message,type){
     }
   }
   NextPage(type){
+    let count
+    if(localStorage.getItem('count')!=null){
+        count=localStorage.getItem('count');
+        count++;
+        localStorage.setItem('count',count);
+    }
+    else{
+      localStorage.setItem('count','0');
+    }
     let options= 
     {
       animate: true, 
@@ -477,7 +552,7 @@ ShowAlert(title,message,type){
      animation: 'ios-transition', 
          duration: 1000, 
      direction: 'left'};      
-      this.navCtrl.setRoot(AddNewLocationPage,null,options);
+      this.navCtrl.pop();
    }
   }
 }

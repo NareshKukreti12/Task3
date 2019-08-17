@@ -13,18 +13,26 @@
 <ion-content padding>
      <div class="search center">
         <p style="font-weight: bold;font-size: 1.9rem">I am </p>
-        <ion-input [(ngModel)]="name"  placeholder="Your name"></ion-input>    
-        <ion-input [(ngModel)]="position"  placeholder="Position/Designation"></ion-input>    
-        <p  style="font-weight: bold">at</p>
-        <ion-item>
+        <ion-searchbar  [(ngModel)]="name"  placeholder="Your name"></ion-searchbar >    
+        <ion-searchbar [(ngModel)]="position"  placeholder="Position/Designation"></ion-searchbar>    
+        <p  style="font-weight: bold;margin-top: 36px">at</p>
+        <!-- <ion-item>
            
           <ion-avatar item-start>
             <img [src]="logo">
           </ion-avatar>
             <ion-label style="color:#565656!important">{{value}}</ion-label>
           
-          </ion-item>
-          <p>{{address}}</p>
+          </ion-item> -->
+
+          <ion-item text-wrap style="margin-top:30px ">
+            <ion-avatar item-start>
+              <img [src]="logo">
+            </ion-avatar>
+            <h2>{{value}}</h2>
+            <p>{{address}}</p> 
+          </ion-item>       
+          
      </div>
-     <p *ngIf="name.length>0 && position.length>0" [ngClass]="Slide()" (click)="NextPage()"  class="animated footer"><u>Go Ahead</u></p>
+     <p *ngIf="name.length>0" [ngClass]="Slide()" (click)="NextPage()"  class="animated footer"><u>Go Ahead</u></p>
 </ion-content>

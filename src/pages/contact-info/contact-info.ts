@@ -18,6 +18,7 @@ import { ThankyouPage } from '../thankyou/thankyou';
 })
 export class ContactInfoPage {
   email:string='';
+  focus:boolean=true;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public googlePlus: GooglePlus,private fb: Facebook) {
   }
@@ -117,5 +118,17 @@ export class ContactInfoPage {
          duration: 1000, 
      direction: 'left'};
      this.navCtrl.setRoot(ThankyouPage,null,options)
+  }
+  FocusRemoved(){
+    console.log("Focus removed",this.ValidateEmail());
+    this.focus=false;
+  }
+  checkFocus(event){
+    this.focus=true;
+  }
+  isEmailIsValid(){
+    if(this.focus==false && this.ValidateEmail()==false && this.email.length>0){
+       return{'border':true};
+    }
   }
 }

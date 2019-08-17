@@ -6,9 +6,9 @@
         [(ngModel)]="searchTerm"
         (ionChange)="setFilteredItems()"
         [showCancelButton]='false'
-        placeholder="Enter business type here"
-        (ionFocus)="checkFocus($event)"
+        placeholder="Enter business type here"       
         (ionCancel)="onCancel($event)"
+        (ionFocus)="checkFocus($event)"
         (ionBlur)="FocusRemoved()">
       </ion-searchbar>
     </ion-navbar>

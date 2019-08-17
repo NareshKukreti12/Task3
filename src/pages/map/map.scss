@@ -34,15 +34,25 @@ page-map {
     opacity: 0.8 !important;
 }
   #markerLayer img {
-    border: 2px solid color($colors,primary) !important;
+   // border: 2px solid color($colors,primary) !important;
     width: 85% !important;
     height:85% !important;
     border-radius: 50%;
     object-fit: cover !important;
   }
 
+  .searchbar-md .searchbar-search-icon{
+    display: none !important;
+}
+.searchbar-md .searchbar-input{
 
-  
+     font-size: 1.4rem !important;
+    padding-left: 5px !important;
+    padding-right:22px;
+}
+.searchbar-md .searchbar-clear-icon{
+  right: 2px !important;
+}
   .info-window{
     position: absolute;
     z-index: 2;

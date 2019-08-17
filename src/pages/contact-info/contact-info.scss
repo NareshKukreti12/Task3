@@ -3,12 +3,18 @@ page-contact-info {
         text-align: center;
     }
     input[type=text],input[type=email]{
+        // border: 1px solid #ccc;
+        // border-radius: 5px;
+        // padding:10px;
+        margin:0 !important;
+    }
+    ion-input{
         border: 1px solid #ccc;
-        border-radius: 5px;
-        padding:10px;
+        border-radius: 5px !important;
+        padding:10px !important;
     }
     .social{
-        margin-top: 40px;
+      //  margin-top: 40px;
     }
     .social button{
         padding: 10px;
@@ -23,5 +29,8 @@ page-contact-info {
     }
     .btn-facebook{
         background-color:#3b5998
+    }
+    .border{
+        border: 1px solid red;
     }
 }

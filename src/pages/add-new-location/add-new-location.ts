@@ -20,14 +20,19 @@ export class AddNewLocationPage {
   location_count:Number=0;
   locationText='';
   doItLater='';
+  count='';
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.count=localStorage.getItem('count');
+    console.log(this.count);
   }
   AddLocation(){
     let options= 
    {animate: true, 
     animation: 'ios-transition', 
         duration: 1000, 
-    direction: 'left'}
+    direction: 'left'};
+    localStorage.setItem('count','2');
+    this.count="2";
    this.navCtrl.push(MapPage,{parent:1},options)
   }
   ionViewDidLoad() {
@@ -48,6 +53,12 @@ export class AddNewLocationPage {
      this.navCtrl.setRoot(PersonalInfoPage,null,options)
   }
   Animation(type){
+    let count=localStorage.getItem('count');
+    if(count=='0'){
+    let locations=[]=JSON.parse(localStorage.getItem('locations'));
+    console.log(locations)
+     
+
     if(this.locationText.length>0)
     {
       if(type==2){
@@ -57,12 +68,22 @@ export class AddNewLocationPage {
     
     }
     if(type==3){
-      if(this.doItLater.length>0){
+      if(this.doItLater.length>0 ){
        
         
           return {'fadeInUp':true}
         }    
     }
+  }
    
+  }
+  lightSpeedIn(){
+    let count=localStorage.getItem('count');
+    if(count=='0'){
+      if(this.locationText.length==0){
+        return {'lightSpeedIn':true}
+      }
+    }
+ 
   }
 }

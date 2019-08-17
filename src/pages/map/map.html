@@ -13,11 +13,11 @@
   <div class="map" >
     <div *ngIf="checked==false">
     <div style="width:100%;text-align: center">
-        <div style="width: 33%;float: left"><ion-input style="width:100%;z-index: 6;" [(ngModel)]="city" placeholder="City"></ion-input></div>
-        <div style="width: 33%;float: left"> <ion-input style="width:100%;z-index: 6;"  [(ngModel)]="state" placeholder="State"></ion-input></div>
-        <ion-input  style="width: 33%;float: left" [(ngModel)]="country" disabled placeholder="Country"></ion-input>    
+        <div style="width: 33%;float: left"><ion-searchbar style="width:100%;z-index: 6;" [(ngModel)]="city" placeholder="City"></ion-searchbar></div>
+        <div style="width: 33%;float: left"> <ion-searchbar style="width:100%;z-index: 6;"  [(ngModel)]="state" placeholder="State"></ion-searchbar></div>
+        <ion-searchbar  style="width: 33%;float: left" [(ngModel)]="country" disabled placeholder="Country"></ion-searchbar>    
       </div>          
-      <ion-input (ionChange)="UpdateAddress()" [(ngModel)]="address" placeholder="Address"></ion-input>
+      <ion-searchbar (ionChange)="UpdateAddress()" [(ngModel)]="address" placeholder="Address"></ion-searchbar>
     </div> 
       <ion-item *ngIf="isAddress==true">
           <ion-label >Do not have an address</ion-label>
@@ -25,7 +25,7 @@
         </ion-item>
         <div  id="div_address" style="padding-bottom: 5px;padding-left: 15px;padding-right: 15px">
             <p style="margin-left:10px">City you operate in</p> 
-            <input id="from"  [(ngModel)]="address2" style="width:100% !important" type="text" placeholder="From">
+            <input  id="from"  [(ngModel)]="address2" style="width:100% !important" type="text" placeholder="From">
            </div>  
       <p style="width:100%;text-align: center"  (click)="LocateOnMap()" *ngIf="address.length>0" >
         <u *ngIf="checked==false">Locate on Map</u>&nbsp;&nbsp;

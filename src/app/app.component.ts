@@ -55,40 +55,7 @@ export class MyApp {
             this.rootPage=ThankyouPage;
           }
         }
-        //  if(localStorage.getItem('phone_number')!=null){
-        //   console.log("Heyyyyy")
-        //   this.rootPage=MapPage;
-        // }
-        // else {
-        //   this.rootPage=Page3Page;
-        // }
-        // if(localStorage.getItem('locations')!=null){
-        //    if(localStorage.getItem('is_address')==null){
-        //      this.rootPage=AddNewLocationPage;
-        //    }
-        //    else{
-        //      this.rootPage=PersonalInfoPage;
-        //    }
-        // }
-        // else{
-        //   this.rootPage=MapPage;
-        // }
-        // if(localStorage.getItem('personal_info')!=null){
-        //    if(JSON.parse(localStorage.getItem('personal_info')).email!=null){
-        //      if(localStorage.getItem('password')!=null){
-        //        this.rootPage=ThankyouPage
-        //      }
-        //      else{
-        //        this.rootPage=PasswordPage;
-        //      }
-        //    }
-        //    else{
-        //      this.rootPage=ContactInfoPage;
-        //    }
-        // }
-        // else{
-        //   this.rootPage=PersonalInfoPage;
-        // }
+       
      }
 
     platform.ready().then(() => {

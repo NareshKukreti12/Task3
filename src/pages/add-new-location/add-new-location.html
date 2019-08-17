@@ -8,7 +8,8 @@
 <ion-content padding>
 
     <div class="search">
-      <p class="animated large lightSpeedIn" [ngClass]="Animation(1)"   id="wonderful">You are Perfect in this</p> 
+      <p class="animated large " *ngIf="count=='0'" [ngClass]="lightSpeedIn()"    id="wonderful">You are Perfect in this</p> 
+   
       <p (click)="AddLocation()" class="animated" [ngClass]="Animation(2)"><u>{{locationText}}</u></p>
     </div>
     <p class="footer animated" (click)="NextPage()" [ngClass]="Animation(3)">{{doItLater}}</p>

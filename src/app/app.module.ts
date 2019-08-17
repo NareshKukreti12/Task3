@@ -24,6 +24,7 @@ import { PasswordPage } from '../pages/password/password';
 import { ThankyouPage } from '../pages/thankyou/thankyou';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Facebook } from '@ionic-native/facebook';
+import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
 @NgModule({
   declarations: [
     MyApp,
@@ -44,7 +45,8 @@ import { Facebook } from '@ionic-native/facebook';
     IonicModule.forRoot(MyApp),
     IonicImageViewerModule,
     HttpModule,
-    HttpClientModule
+    HttpClientModule,
+    PasswordStrengthBarModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
