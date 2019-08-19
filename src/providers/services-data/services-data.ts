@@ -17,15 +17,15 @@ export class ServicesDataProvider  {
   constructor(http:Http,) {
      this.http=http;
     this.items = [
-      { title: "Software Development",logo:'http://www.sclance.com/pngs/technology-icon-png/technology_icon_png_1359192.png' },
-      { title: "Marketing",logo:'https://astrolabs.com/wp-content/uploads/2017/09/Icons-DM-SMM.png' },
-      { title: "Agriculture",logo:'https://www.freepngimg.com/thumb/agriculture/6-2-agriculture-png-images.png' },
-      { title: "Automobiles",logo:'https://www.pngfind.com/pngs/m/145-1450403_automobiles-reliable-first-adcon-private-limited-hd-png.png' },
-      { title: "Transport",logo:'https://img.pngio.com/filewv-transport-logopng-transport-png-1187_1187.png' },
-      { title: "Aviation",logo:'https://www.designfreelogoonline.com/wp-content/uploads/2016/01/000679-Free-logo-maker-Aircraft-Logo-Templates-02.png' },
-      { title: "Clothing",logo:'https://www.pinclipart.com/picdir/middle/168-1681636_140-clothes-icon-packs-icon-t-shirt-png.png' },
-      { title: "Restaurant",logo:'https://www.freeiconspng.com/uploads/restaurant-icon-png-7.png' },
-      { title:"Fitness",logo:"https://cdn0.iconfinder.com/data/icons/basic-8/97/45-512.png"},
+      { title: "Software Development",logo:'../../assets/logos/1.png' },
+      { title: "Marketing",logo:'../../assets/logos/2.png'  },
+      { title: "Agriculture",logo:'../../assets/logos/3.png'  },
+      { title: "Automobiles",logo:'../../assets/logos/4.png'  },
+      { title: "Transport",logo:'../../assets/logos/5.png' },
+      { title: "Aviation",logo:'../../assets/logos/6.png'  },
+      { title: "Clothing",logo:'../../assets/logos/7.png'  },
+      { title: "Restaurant",logo:'../../assets/logos/8.png'  },
+      { title:"Fitness",logo:'../../assets/logos/9.png' },
     ];
   }
   

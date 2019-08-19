@@ -1,4 +1,7 @@
 page-map {
+  .no-scroll .scroll-content{
+    overflow: hidden !important;
+}
   #map{
       width: 100%;
       height: 100%;
@@ -10,8 +13,10 @@ page-map {
   .map{
     position: fixed;
     z-index: 2 !important;
-    background-color: rgba(154, 154, 155, 0.5) !important;
+    background-color: rgba(154, 154, 155, 0.6) !important;
     width: 100%;
+    color: #565656;
+    font-weight: bold;
     //padding-bottom: 10px;
    // padding:20px !important;
    // padding-top: 5px !important;
@@ -35,12 +40,15 @@ page-map {
 }
   #markerLayer img {
    // border: 2px solid color($colors,primary) !important;
-    width: 85% !important;
+    width:85% !important;
     height:85% !important;
-    border-radius: 50%;
-    object-fit: cover !important;
+   
+    // border-radius: 5px !important;
+    object-fit: contain !important;
+  
   }
 
+ 
   .searchbar-md .searchbar-search-icon{
     display: none !important;
 }
@@ -70,4 +78,34 @@ page-map {
   .item.item-md .checkbox-md{
     margin-right: 5px!important;
   }
+  .hero {
+    position:relative;
+   //background-image: url("https://images.pexels.com/photos/1227520/pexels-photo-1227520.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+    height:320px !important;
+    width:320px !important;
+    border:30px solid color($colors,primary);
+    border-radius:40px !important;
+    background-size: cover;
+  
+}
+#div_marker{
+z-index: -1;
+position: absolute;
+display: none;
+}
+.hero:after {
+ 
+    content:'';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 0;
+    height: 0;
+    border-top: solid 80px color($colors,primary);
+    border-left: solid 80px transparent;
+    border-right: solid 80px transparent;
+    z-index: 100;
+}
 }

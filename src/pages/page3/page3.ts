@@ -52,7 +52,7 @@ export class Page3Page {
       console.log("Here");
       (document.getElementById('txtOtp') as HTMLInputElement).focus();
        
-    },2000);
+    },1000);
     
   }
   Cancel(){

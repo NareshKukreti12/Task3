@@ -25,6 +25,7 @@ import { ThankyouPage } from '../pages/thankyou/thankyou';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Facebook } from '@ionic-native/facebook';
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
+import { Keyboard } from '@ionic-native/keyboard';
 @NgModule({
   declarations: [
     MyApp,
@@ -72,8 +73,8 @@ import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
     Geolocation,
     NativeGeocoder,
     GooglePlus,
-    Facebook
-    
+    Facebook,
+    Keyboard
   ]
 })
 export class AppModule {}

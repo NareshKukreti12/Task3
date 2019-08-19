@@ -9,15 +9,21 @@
   </ion-navbar>
 </ion-header> -->
 
-<ion-content>
-  <div class="map" >
+<ion-content class="no-scroll">
+  <div >
+  <div class="hero" id="div_marker" style="display:none;z-index: -200;" >
+      <!-- <img [src]="image"> -->
+
+  </div>
+</div>
+  <div class="map"  >
     <div *ngIf="checked==false">
     <div style="width:100%;text-align: center">
-        <div style="width: 33%;float: left"><ion-searchbar style="width:100%;z-index: 6;" [(ngModel)]="city" placeholder="City"></ion-searchbar></div>
-        <div style="width: 33%;float: left"> <ion-searchbar style="width:100%;z-index: 6;"  [(ngModel)]="state" placeholder="State"></ion-searchbar></div>
+        <div style="width: 33%;float: left"><ion-searchbar style="width:100%;z-index: 6;" id="city"   [(ngModel)]="city" placeholder="City"></ion-searchbar></div>
+        <div style="width: 33%;float: left"> <ion-searchbar style="width:100%;z-index: 6;" id="state"  [(ngModel)]="state" placeholder="State"></ion-searchbar></div>
         <ion-searchbar  style="width: 33%;float: left" [(ngModel)]="country" disabled placeholder="Country"></ion-searchbar>    
       </div>          
-      <ion-searchbar (ionChange)="UpdateAddress()" [(ngModel)]="address" placeholder="Address"></ion-searchbar>
+      <ion-searchbar (ionChange)="UpdateAddress()" [(ngModel)]="address" id="address" placeholder="Address"></ion-searchbar>
     </div> 
       <ion-item *ngIf="isAddress==true">
           <ion-label >Do not have an address</ion-label>

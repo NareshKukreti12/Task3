@@ -1,12 +1,12 @@
 import { Component,ViewChild,ElementRef, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController, Keyboard } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
 import { ServicesDataProvider } from '../../providers/services-data/services-data';
 import { timestamp } from 'rxjs/operator/timestamp';
 import { AddNewLocationPage } from '../add-new-location/add-new-location';
 import { PersonalInfoPage } from '../personal-info/personal-info';
-import { count } from 'rxjs/operator/count';
+import domtoimage from 'dom-to-image';
 declare var google;
 @IonicPage()
 @Component({
@@ -35,9 +35,25 @@ export class MapPage {
     private geolocation: Geolocation,public platform:Platform,
     public serviceRep:ServicesDataProvider,
     public alertCtrl:AlertController,
+    public keyboard:Keyboard,
     public ngZone:NgZone
     ) {
     
+       
+      //  this.platform.registerBackButtonAction(()=>{
+      //     if(this.keyboard.isOpen()==true){
+      //       console.log("Inside if statement");
+      //        this.keyboard.close();
+      //        (document.getElementById('city') as HTMLInputElement).blur();
+      //        (document.getElementById('state') as HTMLInputElement).blur();
+      //        (document.getElementById('address') as HTMLInputElement).blur();
+      //     }
+      //     else{
+      //       console.log("Inside else statement");
+      //     }
+      //  })
+
+
       if(localStorage.getItem('locations')!=null){
       
         this.isAddress=false;
@@ -203,11 +219,28 @@ export class MapPage {
       }
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      this.map.addListener('click',()=>{
+        console.log("Map Selected");        
+         this.RemoveFocus();      
+      })
+
+      google.maps.event.addListener(this.map,'drag', ()=> { 
+      console.log("Map Dragged");
+        this.RemoveFocus();  
+      });
       this.getLocation();
      
     //  this.addMarker();
 // this.getItems();
    
+}
+RemoveFocus(){
+  if(this.keyboard.isOpen()==true){
+    this.keyboard.close();
+    (document.getElementById('city') as HTMLInputElement).blur();
+   (document.getElementById('state') as HTMLInputElement).blur();
+   (document.getElementById('address') as HTMLInputElement).blur();
+  }
 }
   ionViewDidLoad() {
     (document.getElementById('div_address') as HTMLDivElement).style.display='none';
@@ -219,7 +252,7 @@ export class MapPage {
     else{
       this.image=null;
     }
-   
+   (document.getElementById('div_marker') as HTMLDivElement).style.backgroundImage='url('+this.image+')';
   }
   AutoComplete(){
     console.log("Hiii", this.country);
@@ -277,46 +310,10 @@ export class MapPage {
     }
   }
   addMarker(lat,lng){
-    var icon = {
-      url: this.image!=null?this.image:"http://www.myiconfinder.com/uploads/iconsets/256-256-6096188ce806c80cf30dca727fe7c237.png", // url
-      scaledSize: new google.maps.Size(50, 50), // scaled size
-      origin: new google.maps.Point(0,0), // origin
-      anchor: new google.maps.Point(0, 0), // anchor
-      labelOrigin: new google.maps.Point(20, 55)
-  };
- 
- let marker=  new google.maps.Marker({
-      map: this.map,
-     icon:icon,
-      shape: [0, 0, 40, 40],
-      position: this.map.getCenter(),
-      animation: google.maps.Animation.DROP,
-      draggable:true,
-     // label: { color: '#565656', fontWeight: 'bold', fontSize: '20px',top:'200px', text: this.name },
-     
-    });
-    this.markers.push(marker);
-    var myoverlay = new google.maps.OverlayView();
-    myoverlay.draw = function () {
-        this.getPanes().markerLayer.id='markerLayer';
-    };
-      myoverlay.setMap(this.map);
-    google.maps.event.addListener(marker, 'dragend', (e)=> 
-    { 
-   console.log(e);
-     this.ngZone.run(()=>{
-      this.lat=e.latLng.lat();
-      this.lng=e.latLng.lng();
-      console.log(e);
-     // this.GetCurrentLocation(this.lat,this.lng,1);
-      //this.GetPlusCode();
-      this.GetAddress(this.lat,this.lng);
-     })
-     
-    });
-   marker.addListener('click', () => {
-      this.ToogleBounce();
-   });
+
+    
+      this.Convert(lat,lng);
+      
   }
 
  GetAddress(lat,lng){
@@ -409,24 +406,25 @@ export class MapPage {
             var AddressComponent=[]=results[0].address_components;
             this.address_components=AddressComponent;
             console.log(AddressComponent);
-           
-            AddressComponent.forEach(element => {
-               this.ngZone.run(()=>{
-                if(element.types.indexOf('administrative_area_level_1')>=0){
-                  //this.shipForm.controls['state'].setValue(element.long_name);
-                   this.state=element.long_name
-                }
-                if(element.types.indexOf('country')>=0){
-                  //this.shipForm.controls['country'].setValue(element.long_name);
-                  this.country=element.long_name;
-                }
-                if(element.types.indexOf('administrative_area_level_2')>=0){
-                  console.log("Hiii")
-                  //this.shipForm.controls['state'].setValue(element.long_name);
-                   this.city=element.long_name
-                }
-               })
-            });
+            this.GetAddress(this.lat,this.lng);
+
+             
+
+            // AddressComponent.forEach(element => {
+            //    this.ngZone.run(()=>{
+            //     if(element.types.indexOf('administrative_area_level_1')>=0){
+            //       //this.shipForm.controls['state'].setValue(element.long_name);
+            //        this.state=element.long_name
+            //     }
+            //     if(element.types.indexOf('country')>=0){
+            //       //this.shipForm.controls['country'].setValue(element.long_name);
+            //       this.country=element.long_name;
+            //     }
+            //     if(element.types.indexOf('locality')>=0){
+            //        this.city=element.long_name
+            //     }
+            //    })
+            // });
             this.loadMap();
           this.city=results[0].address_components[1]["short_name"];
            })
@@ -445,6 +443,7 @@ export class MapPage {
   LocateOnMap(){
     let address=this.address+" "+this.city+" "+this.state+" "+this.country;
     this.RecenterMap(address);
+    this.RemoveFocus();
   }
 
 ShowAlert(title,message,type){
@@ -554,5 +553,81 @@ ShowAlert(title,message,type){
      direction: 'left'};      
       this.navCtrl.pop();
    }
+  }
+  checkFocus(){
+    console.log("Focus")
+  }
+  checkBlur(){
+    console.log("Blur");
+  }
+  keyboardCheck() {
+    console.log('The keyboard is open:', this.keyboard.isOpen());
+  }
+  GetDataURL(img){
+    
+    var canvas = document.createElement('canvas')
+    var ctx = canvas.getContext('2d')
+  
+    canvas.width = img.width
+    canvas.height = img.height
+    ctx.drawImage(img, 0, 0)
+  
+    // If the image is not png, the format
+    // must be specified here
+    return canvas.toDataURL()
+  }
+  Convert(lat,lng){ 
+    (document.getElementById('div_marker') as HTMLDivElement).style.display='block';
+    let node=document.getElementById('div_marker');
+    console.log(node);
+    domtoimage.toPng(node)
+    .then((dataUrl)=> {
+      var icon = {
+      url: this.image!=null?dataUrl:"http://www.myiconfinder.com/uploads/iconsets/256-256-6096188ce806c80cf30dca727fe7c237.png", // url
+      scaledSize: new google.maps.Size(50, 50), // scaled size
+      origin: new google.maps.Point(0,0), // origin
+      anchor: new google.maps.Point(0, 0), // anchor
+      labelOrigin: new google.maps.Point(20, 55)
+  };
+ 
+ let marker=  new google.maps.Marker({
+      map: this.map,
+     icon:icon,
+      shape: [0, 0, 40, 40],
+      position: this.map.getCenter(),
+      animation: google.maps.Animation.DROP,
+      draggable:true,
+      crossOnDrag:false,
+      label: { color: '#f44336', textTransform: 'uppercase', fontWeight: 'bold', fontSize: '15px',top:'200px', text: this.name },
+     
+    });
+    this.markers.push(marker);
+    var myoverlay = new google.maps.OverlayView();
+    myoverlay.draw = function () {
+        this.getPanes().markerLayer.id='markerLayer';
+    };
+      myoverlay.setMap(this.map);
+    google.maps.event.addListener(marker, 'dragend', (e)=> 
+    { 
+   console.log(e);
+     this.ngZone.run(()=>{
+      this.lat=e.latLng.lat();
+      this.lng=e.latLng.lng();
+      console.log(e);
+     // this.GetCurrentLocation(this.lat,this.lng,1);
+      //this.GetPlusCode();
+      this.GetAddress(this.lat,this.lng);
+     })
+     
+    });
+   marker.addListener('click', () => {
+      this.ToogleBounce();
+   });
+        console.log(dataUrl);
+       
+    })
+    .catch(function (error) {
+        console.error('oops, something went wrong!', error);
+    })
   }
 }
