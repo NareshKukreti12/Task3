@@ -1,7 +1,7 @@
 import { Component,ElementRef, ViewChild  } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Page3Page } from '../page3/page3';
-
+import { ImagePicker } from '@ionic-native/image-picker';
 /**
  * Generated class for the Page2Page page.
  *
@@ -28,6 +28,7 @@ export class Page2Page {
   text
   @ViewChild('fileInp') fileInput: ElementRef;
   constructor(public navCtrl: NavController, public navParams: NavParams,
+    private imagePicker: ImagePicker,
     public platform:Platform) {
       this.isLogo=false;
       this.text="Add Logo"
@@ -40,6 +41,19 @@ export class Page2Page {
     },1000)
     
   }
+  ionViewDidEnter(){
+    let options={};
+    console.log('ionViewDidEnter');
+    console.log("==>permission", localStorage.getItem('permission'));
+    if(localStorage.getItem('permission')==null){
+      this.imagePicker.getPictures(options);
+      localStorage.setItem('permission',"1");
+    }
+    else{
+      localStorage.setItem('permission',"1");
+    }
+  }
+  
   ngAfterViewInit(){
     let items=JSON.parse(localStorage.getItem('business'))
     console.log(items[0]["business_details"].name);
@@ -63,15 +77,32 @@ export class Page2Page {
       return{'slideTop':true}
     }
   }
-  setFilteredItems(){
-  
-  }
+
   addPic(){
-    this.fileInput.nativeElement.click();
+    if(this.platform.is('cordova')){
+       let options={
+        maximumImagesCount:1,
+        outputType: 1,
+        quality: 50
+
+       }
+       this.imagePicker.getPictures(options).then((results) => {
+         if(results[0]!=null)      
+        {console.log('Image URI: ' + results[0]);
+        this.logo="data:image/jpeg;base64,"+ results[0];
+        this.original_url="data:image/jpeg;base64,"+results[0];
+        this.isLogo=true;}
+      
+      }, (err) => { });
+    }
+    else{
+      this.fileInput.nativeElement.click();
+    }
   }
   fileUpload(ev) {
   //  for(let i=0;i<ev.target.files.length;i++){
-      this.getBase64(ev.target.files[0]);
+     
+     this.getBase64(ev.target.files[0]);
   //  } 
   }
   

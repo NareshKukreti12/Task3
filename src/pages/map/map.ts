@@ -7,6 +7,8 @@ import { timestamp } from 'rxjs/operator/timestamp';
 import { AddNewLocationPage } from '../add-new-location/add-new-location';
 import { PersonalInfoPage } from '../personal-info/personal-info';
 import domtoimage from 'dom-to-image';
+import { Page4Page } from '../page4/page4';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 declare var google;
 @IonicPage()
 @Component({
@@ -25,7 +27,7 @@ export class MapPage {
   map: any;
   checked:boolean=false;
   PlusCode=[];
-  address_components=[];
+  address_components:any;
   address2;
   isAddress:boolean=false;
   business_name:string ='';
@@ -36,7 +38,8 @@ export class MapPage {
     public serviceRep:ServicesDataProvider,
     public alertCtrl:AlertController,
     public keyboard:Keyboard,
-    public ngZone:NgZone
+    public ngZone:NgZone,
+    private locationAccuracy: LocationAccuracy
     ) {
     
        
@@ -54,33 +57,49 @@ export class MapPage {
       //  })
 
 
-      if(localStorage.getItem('locations')!=null){
-      
-        this.isAddress=false;
-      }
-      else{
-        this.isAddress=true;
-      }
-      this.prt=navParams.get('parent')?1:0;
-      console.log("Parent",this.prt)
-      this.geolocation.getCurrentPosition().then((resp) => {
-        this.lat= resp.coords.latitude
-        this.lng=resp.coords.longitude;
-       
-        let items=[]=JSON.parse(localStorage.getItem('business'));
-        var address =this.name=items[0]["business_details"]["name"];
-        console.log(address);
-        this.business_name=address;
-        this.GetCurrentLocation(this.lat,this.lng,0);
-       
-       
-       }).catch((error) => {
-         console.log('Error getting location', error);
-       });
+
+
+        if(this.platform.is('cordova')){
+          this.geolocation.getCurrentPosition().then((resp) => {
+            this.GetCurrentLocation(resp.coords.latitude,resp.coords.longitude,0);
+           }).catch((error) => {
+              alert('Requst permission denied');
+              this.navCtrl.setRoot(Page4Page);
+           });
+        }
+        else{
+          this.GetCoordinates();
+        }
+      //  this.GetCoordinates();
+        //this.GetCoordinates();
+     
     
-       // this.loadMap();
   }
- 
+  GetCoordinates(){
+    if(localStorage.getItem('locations')!=null){
+      
+      this.isAddress=false;
+    }
+    else{
+      this.isAddress=true;
+    }
+    this.prt=this.navParams.get('parent')?1:0;
+    console.log("Parent",this.prt)
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.lat= resp.coords.latitude
+      this.lng=resp.coords.longitude;
+     
+      let items=[]=JSON.parse(localStorage.getItem('business'));
+      var address =this.name=items[0]["business_details"]["name"];
+      console.log(address);
+      this.business_name=address;
+      this.GetCurrentLocation(this.lat,this.lng,0);
+     
+     
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
+  }
  
 
   GetLocation(address){
@@ -101,7 +120,7 @@ export class MapPage {
           this.lat=latitude;
             this.lng=longitude;
             var AddressComponent=[]=results[0].address_components;
-            this.address_components=AddressComponent;
+            this.address_components=results[0];
             console.log(AddressComponent);
            
             this.loadMap();
@@ -165,7 +184,7 @@ export class MapPage {
           this.lat=latitude;
             this.lng=longitude;
             var AddressComponent=[]=results[0].address_components;
-            this.address_components=AddressComponent;
+            this.address_components=results[0];
             AddressComponent.forEach(element => {
                
                 if(element.types.indexOf('administrative_area_level_1')>=0){
@@ -185,10 +204,10 @@ export class MapPage {
             });
            // this.city=results[0].address_components[0]["short_name"];
            })
-         
+           this.loadMap();
           this.GetPlusCode();
           this.business_name=this.business_name+" "+this.state+" "+this.country;
-          this.GetLocation(this.business_name);
+         // this.GetLocation(this.business_name);
           this.AutoComplete();
           } 
          
@@ -237,9 +256,8 @@ export class MapPage {
 RemoveFocus(){
   if(this.keyboard.isOpen()==true){
     this.keyboard.close();
-    (document.getElementById('city') as HTMLInputElement).blur();
-   (document.getElementById('state') as HTMLInputElement).blur();
-   (document.getElementById('address') as HTMLInputElement).blur();
+
+   (document.getElementById('txtAddress') as HTMLInputElement).blur();
   }
 }
   ionViewDidLoad() {
@@ -255,31 +273,39 @@ RemoveFocus(){
    (document.getElementById('div_marker') as HTMLDivElement).style.backgroundImage='url('+this.image+')';
   }
   AutoComplete(){
-    console.log("Hiii", this.country);
+  
+  
+    var address=document.getElementById('txtAddress');
+    console.log(address);
+    this.RegisterEvent(address); 
+  }
+  RegisterEvent(ElementId){
     var options = {
-      types: ['(cities)'],
       componentRestrictions: {country: this.country_code}
      };
    
-    var input = document.getElementById('from');
-    var autocomplete = new google.maps.places.Autocomplete(input,options);
+    var autocomplete = new google.maps.places.Autocomplete(ElementId,options);
     google.maps.event.addListener(autocomplete, 'place_changed',  ()=> {
-      var place=[] = autocomplete.getPlace().address_components;
-      let city='',state='',country='';
-      place.forEach(element => {
-       if( element.types.indexOf('administrative_area_level_2')>=0){
-          city=element.long_name
-       }
-       if(element.types.indexOf('administrative_area_level_1')>=0){
-         state=element.long_name;
-       }
-       if(element.types.indexOf('country')>=0 ){
-        //this.shipForm.controls['country'].setValue(element.long_name);
-       country=element.long_name;
-      }
-      });
-      this.address2=city+", "+state+", "+country;
-      console.log(place);
+      console.log(autocomplete.getPlace().name)
+      this.address=autocomplete.getPlace().name;
+      this.RecenterMap(this.address);
+     // console.log( autocomplete.getPlace().formatted_address)
+    //   var place=[] = autocomplete.getPlace().address_components;
+    //   let city='',state='',country='';
+    //  // console.log(place);
+    //   place.forEach(element => {
+    //    if( element.types.indexOf('administrative_area_level_2')>=0){
+    //       city=element.long_name
+    //    }
+    //    if(element.types.indexOf('administrative_area_level_1')>=0){
+    //      state=element.long_name;
+    //    }
+    //    if(element.types.indexOf('country')>=0 ){
+    //     //this.shipForm.controls['country'].setValue(element.long_name);
+    //    country=element.long_name;
+    //   }
+    //   });
+     
       });
   }
   getLocation() {
@@ -329,7 +355,7 @@ RemoveFocus(){
         this.lat=latitude;
           this.lng=longitude;
           var AddressComponent=[]=results[0].address_components;
-          this.address_components=AddressComponent;
+          this.address_components=results[0];
           AddressComponent.forEach(element => {
              
               if(element.types.indexOf('administrative_area_level_1')>=0){
@@ -384,10 +410,7 @@ RemoveFocus(){
             }
         });
   }
-  UpdateAddress(){
-    let address=this.address +" "+ this.city+" "+this.state+" "+this.country;
-   // this.GetLocation(address);
-  }
+
   RecenterMap(address){
     var geocoder = new google.maps.Geocoder();
     let items=[]=JSON.parse(localStorage.getItem('business'));
@@ -396,7 +419,7 @@ RemoveFocus(){
       console.log(results);
 
       if (status == google.maps.GeocoderStatus.OK) {
-          this.address=results[0]["formatted_address"];
+        //  this.address=results[0]["formatted_address"];
           var latitude = results[0].geometry.location.lat();
           var longitude = results[0].geometry.location.lng();
            this.ngZone.run(()=>{
@@ -404,9 +427,10 @@ RemoveFocus(){
           this.lat=latitude;
             this.lng=longitude;
             var AddressComponent=[]=results[0].address_components;
-            this.address_components=AddressComponent;
+            this.address_components=results[0];
+           // this.address_components=results[0];
             console.log(AddressComponent);
-            this.GetAddress(this.lat,this.lng);
+          //  this.GetAddress(this.lat,this.lng);
 
              
 
@@ -426,7 +450,7 @@ RemoveFocus(){
             //    })
             // });
             this.loadMap();
-          this.city=results[0].address_components[1]["short_name"];
+         // this.city=results[0].address_components[1]["short_name"];
            })
          
           this.GetPlusCode();
@@ -441,6 +465,7 @@ RemoveFocus(){
 
   
   LocateOnMap(){
+    console.log(this.address);
     let address=this.address+" "+this.city+" "+this.state+" "+this.country;
     this.RecenterMap(address);
     this.RemoveFocus();
@@ -472,6 +497,7 @@ ShowAlert(title,message,type){
   NextPage(type){
     let count
     if(localStorage.getItem('count')!=null){
+      console.log("here");
         count=localStorage.getItem('count');
         count++;
         localStorage.setItem('count',count);
@@ -496,22 +522,20 @@ ShowAlert(title,message,type){
     else{
 
       let zipCode='';
-      this.address_components.forEach(element => {
+      console.log(this.address_components);
+      let address=this.address_components.formatted_address;
+      console.log(this.address_components.formatted_address)
+      this.address_components.address_components.forEach(element => {
        
         
          if(element.types.indexOf('postal_code')>=0){
-           console.log("Hiii")
-           //this.shipForm.controls['state'].setValue(element.long_name);
            zipCode=element.long_name
          }
-       
-         console.log(zipCode);
          
-       
+         
      });
 
       if(localStorage.getItem("locations")!=null){
-         console.log("Found");
          let locations=[]=JSON.parse(localStorage.getItem('locations'));
          let obj={
           city:this.city,
@@ -523,7 +547,7 @@ ShowAlert(title,message,type){
           zipCode:zipCode
          }
         locations.push(obj);
-        localStorage.setItem('locations',JSON.stringify(locations));
+       // localStorage.setItem('locations',JSON.stringify(locations));
         //this.
       }
       else{
@@ -532,16 +556,16 @@ ShowAlert(title,message,type){
         locations.push({
           city:this.city,
           state:this.state,
-          address:this.address,
+          address:address,
           latitude:this.lat,
           longitude:this.lng,
           plus_code:this.plusCode,
           zipCode:zipCode
         })
-        localStorage.setItem('locations',JSON.stringify(locations));
+       // localStorage.setItem('locations',JSON.stringify(locations));
       }
      
-        this.navCtrl.setRoot(AddNewLocationPage,null,options);
+     //  this.navCtrl.setRoot(AddNewLocationPage,null,options);
       
     }
    }
@@ -579,7 +603,6 @@ ShowAlert(title,message,type){
   Convert(lat,lng){ 
     (document.getElementById('div_marker') as HTMLDivElement).style.display='block';
     let node=document.getElementById('div_marker');
-    console.log(node);
     domtoimage.toPng(node)
     .then((dataUrl)=> {
       var icon = {
@@ -623,11 +646,35 @@ ShowAlert(title,message,type){
    marker.addListener('click', () => {
       this.ToogleBounce();
    });
-        console.log(dataUrl);
+      
        
     })
     .catch(function (error) {
         console.error('oops, something went wrong!', error);
     })
+  }
+  FadeAnim(){
+    if(this.address.length>0){
+      return{'display':true}
+    }
+    else{
+      return {'hide':true}
+    }
+  }
+  clear(){
+    this.address='';
+  }
+  MyLocation(){
+    this.GetCoordinates();
+  }
+  Change(){
+  
+    if(this.address.indexOf(this.city)<0){
+      console.log(this.city);
+      this.ngZone.run(()=>{
+        this.address=this.city+" "+this.address
+      })
+        }
+     //console.log("KeyPress");
   }
 }

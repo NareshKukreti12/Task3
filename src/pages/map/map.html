@@ -10,34 +10,41 @@
 </ion-header> -->
 
 <ion-content class="no-scroll">
-  <div >
-  <div class="hero" id="div_marker" style="display:none;z-index: -200;" >
-      <!-- <img [src]="image"> -->
-
-  </div>
-</div>
-  <div class="map"  >
-    <div *ngIf="checked==false">
-    <div style="width:100%;text-align: center">
-        <div style="width: 33%;float: left"><ion-searchbar style="width:100%;z-index: 6;" id="city"   [(ngModel)]="city" placeholder="City"></ion-searchbar></div>
-        <div style="width: 33%;float: left"> <ion-searchbar style="width:100%;z-index: 6;" id="state"  [(ngModel)]="state" placeholder="State"></ion-searchbar></div>
+ 
+  <div class="map" padding >
+    <div >
+    <div style="width:100%;text-align: center;display: none">
+        <div style="width: 33%;float: left;display:none" ><ion-searchbar style="width:100%;z-index: 6;" id="city"   [(ngModel)]="city" placeholder="City"></ion-searchbar></div>
+        <div style="width: 33%;float: left;display:none"> <ion-searchbar style="width:100%;z-index: 6;" id="state"  [(ngModel)]="state" placeholder="State"></ion-searchbar></div>
         <ion-searchbar  style="width: 33%;float: left" [(ngModel)]="country" disabled placeholder="Country"></ion-searchbar>    
-      </div>          
-      <ion-searchbar (ionChange)="UpdateAddress()" [(ngModel)]="address" id="address" placeholder="Address"></ion-searchbar>
+      </div>         
+      <a style="position: absolute;right:23px;top:5px;">{{city}}</a>   
+     <div class="div-search" id="address">
+      
+      <ion-icon name="pin"></ion-icon>
+      <input type="text" (keydown)="Change()" [(ngModel)]="address" id="txtAddress"  placeholder="Type to search">
+      <ion-icon name="locate" (click)="MyLocation()" class="icons" style="right:17%"></ion-icon>
+      <ion-icon name="close" (click)="clear()" [ngClass]="FadeAnim()" class="icons" style="right:12%"></ion-icon>
+      <ion-icon name="search" (click)="LocateOnMap()"  class="icons" [ngClass]="FadeAnim()" style="right:5%"></ion-icon>
+      <!-- <ion-searchbar (ionChange)="UpdateAddress()" [(ngModel)]="address" id="address" placeholder="Address">
+
+      </ion-searchbar> -->
     </div> 
-      <ion-item *ngIf="isAddress==true">
+    </div> 
+      <ion-item style="display:none">
           <ion-label >Do not have an address</ion-label>
           <ion-checkbox color="dark" (ionChange)="datachanged($event)" checked="false"></ion-checkbox>
         </ion-item>
         <div  id="div_address" style="padding-bottom: 5px;padding-left: 15px;padding-right: 15px">
             <p style="margin-left:10px">City you operate in</p> 
             <input  id="from"  [(ngModel)]="address2" style="width:100% !important" type="text" placeholder="From">
-           </div>  
-      <p style="width:100%;text-align: center"  (click)="LocateOnMap()" *ngIf="address.length>0" >
+           </div> 
+        <p  *ngIf="address.length>0" style="width:100%;text-align: center"> <u (click)="NextPage(1)">Go Ahead</u> &nbsp;&nbsp;</p>   
+      <!-- <p style="width:100%;text-align: center;display:none" (click)="LocateOnMap()" *ngIf="address.length>0" >
         <u *ngIf="checked==false">Locate on Map</u>&nbsp;&nbsp;
         <u (click)="NextPage(1)">Go Ahead</u> &nbsp;&nbsp;
         <u *ngIf="prt==1" (click)="NextPage(0)">Skip</u>
-      </p>
+      </p> -->
     
       <!-- <p  style="display:none !important"  *ngIf="lat!=null" style="width:100%;text-align: center">We got you   <ion-icon color="primary" name="happy"></ion-icon></p> -->
       
@@ -51,7 +58,7 @@
     Longitude:{{lng}}
     Plus Code{{}} -->
  
-    <ion-list>
+    <ion-list style="display:none">
       <ion-item>
       <!-- <h2>Address:{{address}}</h2>  -->
       <h2>Plus Code:{{plusCode}}</h2>
@@ -62,3 +69,9 @@
     </ion-list>
     </div>
 </ion-content>
+<div >
+    <div class="hero" id="div_marker" style="display:none;z-index: -200;" >
+        <!-- <img [src]="image"> -->
+  
+    </div>
+  </div>

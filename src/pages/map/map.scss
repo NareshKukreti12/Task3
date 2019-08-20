@@ -13,7 +13,7 @@ page-map {
   .map{
     position: fixed;
     z-index: 2 !important;
-    background-color: rgba(154, 154, 155, 0.6) !important;
+ //   background-color: rgba(154, 154, 155, 0.6) !important;
     width: 100%;
     color: #565656;
     font-weight: bold;
@@ -23,17 +23,30 @@ page-map {
   //  display: none;
    
   }
- 
-  .map input[type=text]{
+  .div-search{
+    width: 100%;
+    padding-left: 10px;
     border:1px solid #ccc;
     border-radius: 5px;
-    background: rgba(255, 255, 255, 0.8);
-    height: 40px;
+    background-color: #fff;
+    margin-top: 20px
+  }
+
+  .icons{
+    padding:3px !important;
+    font-size: 2rem !important;
+    position: absolute;
+    margin-top: 10px;
+   
+  }
+  .div-search input[type=text]{
+    border:unset !important;
     color: #565665 !important;
-    padding-left: 5px;
-   margin-top: 2px !important;
     margin-bottom: 0px !important;
     font-weight: normal !important;
+    height: 45px;
+    padding-left: 5px !important;
+    width: 70% !important ;
   }
   .text-input[disabled] {
     opacity: 0.8 !important;
@@ -107,5 +120,59 @@ display: none;
     border-left: solid 80px transparent;
     border-right: solid 80px transparent;
     z-index: 100;
+  }
+  @-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes fadeout { /* Safari and Chrome */
+    from {
+        opacity:1;
+    }
+    to {
+        opacity:0;
+    }
+}
+@-o-keyframes fadeout { /* Opera */
+    from {
+        opacity:1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+.display{
+  -moz-animation: fadein 4s; /* Firefox */
+    -webkit-animation: fadein 4s; /* Safari and Chrome */
+    -o-animation: fadein 4s; /* Opera */
+}
+.hide{
+  -moz-animation: fadeout 4s; /* Firefox */
+    -webkit-animation: fadeout 4s; /* Safari and Chrome */
+    -o-animation: fadeout 4s; /* Opera */
+}
+a{
+  text-decoration: underline !important;
+  color: #000000;
 }
 }

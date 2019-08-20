@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 import { Renderer } from '@angular/core';
 import { Page2Page } from '../page2/page2';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
-
+import { ImagePicker } from '@ionic-native/image-picker';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -26,6 +26,7 @@ export class HomePage {
     public renderer:Renderer,
     public keyboard:Keyboard,
     public platform:Platform,
+    private imagePicker: ImagePicker,
     private nativePageTransitions: NativePageTransitions
     ) {
     this.isVisible=false;
@@ -36,6 +37,13 @@ export class HomePage {
   ionAfterViewInit(){
     document.getElementById('searchBar').blur();
     this.keyboard.close();
+    let options={
+      maximumImagesCount:1,
+      outputType: 1,
+      quality: 50
+
+     }
+     this.imagePicker.getPictures(options)
   }
   ngOnInit() {
     this.setFilteredItems();

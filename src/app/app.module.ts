@@ -26,6 +26,8 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { Facebook } from '@ionic-native/facebook';
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
 import { Keyboard } from '@ionic-native/keyboard';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 @NgModule({
   declarations: [
     MyApp,
@@ -74,7 +76,9 @@ import { Keyboard } from '@ionic-native/keyboard';
     NativeGeocoder,
     GooglePlus,
     Facebook,
-    Keyboard
+    ImagePicker,
+    Keyboard,
+    LocationAccuracy
   ]
 })
 export class AppModule {}
