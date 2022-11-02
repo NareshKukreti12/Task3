@@ -33,7 +33,7 @@
     "@ionic-native/status-bar": "~4.20.0",
     "@ionic/storage": "2.2.0",
     "cordova": "^9.0.0",
-    "cordova-android": "7.1.2",
+    "cordova-android": "11.0.0",
     "cordova-plugin-facebook4": "5.0.0",
     "cordova-plugin-googleplus": "8.0.0",
     "cordova-plugin-request-location-accuracy": "2.3.0",
